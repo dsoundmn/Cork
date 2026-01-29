@@ -41,7 +41,7 @@ struct OutdatedPackagesList_List: View
             return sortedRelevantPackages
         }
         
-        return sortedRelevantPackages.filter({ $0.package.getPackageName(withPrecision: .precise).localizedCaseInsensitiveContains(searchText) })
+        return sortedRelevantPackages.filter({ $0.package.name(withPrecision: .precise).localizedCaseInsensitiveContains(searchText) })
     }
     
     /// Check whether all relevant packages are deselected - for `Deselect All` button

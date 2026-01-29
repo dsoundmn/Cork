@@ -56,6 +56,6 @@ struct SidebarPackageRow: View
         .accessibilityAddTraits(.allowsDirectInteraction)
         .accessibilityAddTraits(.isButton)
         .accessibilityLabel("Link to package")
-        .accessibilityValue(package.getPackageName(withPrecision: .precise))
+        .accessibilityValue(package.name(withPrecision: .precise))
     }
 }

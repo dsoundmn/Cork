@@ -57,7 +57,7 @@ struct FormulaeSection: View
                         switch sortPackagesBy
                         {
                         case .alphabetically:
-                            return firstPackage.getPackageName(withPrecision: .precise) < secondPackage.getPackageName(withPrecision: .precise)
+                            return firstPackage.name(withPrecision: .precise) < secondPackage.name(withPrecision: .precise)
                         case .byInstallDate:
                             return firstPackage.installedOn! < secondPackage.installedOn!
                         case .bySize:
@@ -86,7 +86,7 @@ struct FormulaeSection: View
             }
             else
             {
-                filter = { $0.installedIntentionally && $0.getPackageName(withPrecision: .precise).contains(searchText) }
+                filter = { $0.installedIntentionally && $0.name(withPrecision: .precise).contains(searchText) }
             }
         }
         else
@@ -97,7 +97,7 @@ struct FormulaeSection: View
             }
             else
             {
-                filter = { $0.getPackageName(withPrecision: .precise).contains(searchText) }
+                filter = { $0.name(withPrecision: .precise).contains(searchText) }
             }
         }
 

@@ -41,7 +41,7 @@ struct OutdatedPackagesList_Table: View
             return sortedRelevantPackages
         }
         
-        return sortedRelevantPackages.filter({ $0.package.getPackageName(withPrecision: .precise).localizedCaseInsensitiveContains(searchText) })
+        return sortedRelevantPackages.filter({ $0.package.name(withPrecision: .precise).localizedCaseInsensitiveContains(searchText) })
     }
     
     /// Check whether all relevant packages are deselected - for `Deselect All` button
@@ -105,7 +105,7 @@ struct OutdatedPackagesList_Table: View
 
                 TableColumn("package-details.dependencies.results.name")
                 { outdatedPackage in
-                    Text(outdatedPackage.package.getPackageName(withPrecision: .precise))
+                    Text(outdatedPackage.package.name(withPrecision: .precise))
                 }
         
 
@@ -131,7 +131,7 @@ struct OutdatedPackagesList_Table: View
                         .contextMenu
                         {
                             PreviewPackageButton(packageToPreview: .init(
-                                name: outdatedPackage.package.getPackageName(withPrecision: .precise),
+                                name: outdatedPackage.package.name(withPrecision: .precise),
                                 type: outdatedPackage.package.type,
                                 installedIntentionally: outdatedPackage.package.installedIntentionally)
                             )

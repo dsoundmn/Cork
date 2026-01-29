@@ -52,7 +52,7 @@ public extension MinimalHomebrewPackage
         }
 
         self.init(
-            name: homebrewPackage.getPackageName(withPrecision: .precise),
+            name: homebrewPackage.name(withPrecision: .precise),
             type: homebrewPackage.type,
             installedIntentionally: homebrewPackage.installedIntentionally
         )

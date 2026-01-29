@@ -83,14 +83,14 @@ private struct RemovePackageButton: View
             if shouldPurge
             {
                 Label {
-                    Text("action.purge-\(package.getPackageName(withPrecision: .precise))")
+                    Text("action.purge-\(package.name(withPrecision: .precise))")
                 } icon: {
                     Image("custom.trash.triangle.fill")
                 }
             }
             else
             {
-                Label("action.uninstall-\(package.getPackageName(withPrecision: .precise))", systemImage: "trash")
+                Label("action.uninstall-\(package.name(withPrecision: .precise))", systemImage: "trash")
             }
         }
     }

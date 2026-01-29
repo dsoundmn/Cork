@@ -16,20 +16,20 @@ struct SanitizedPackageName: View
 
     var packageNameWithoutTapName: String
     {
-        if package.getPackageName(withPrecision: .precise).contains("/")
+        if package.name(withPrecision: .precise).contains("/")
         { /// Check if the package name contains slashes (this would mean it includes the tap name)
-            if let sanitizedName = try? package.getPackageName(withPrecision: .precise).regexMatch("[^\\/]*$")
+            if let sanitizedName = try? package.name(withPrecision: .precise).regexMatch("[^\\/]*$")
             {
                 return sanitizedName
             }
             else
             {
-                return package.getPackageName(withPrecision: .precise)
+                return package.name(withPrecision: .precise)
             }
         }
         else
         {
-            return package.getPackageName(withPrecision: .precise)
+            return package.name(withPrecision: .precise)
         }
     }
 

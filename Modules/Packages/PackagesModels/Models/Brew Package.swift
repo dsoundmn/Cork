@@ -93,7 +93,7 @@ public struct BrewPackage: Identifiable, Equatable, Hashable, Codable, Sendable,
     }
     
     public init(
-        name: String,
+        rawName: String,
         type: BrewPackage.PackageType,
         isTagged: Bool? = nil,
         isPinned: Bool? = nil,
@@ -105,7 +105,7 @@ public struct BrewPackage: Identifiable, Equatable, Hashable, Codable, Sendable,
         downloadCount: Int?
     ) {
         self.id = .init()
-        self.name = .init(from: name)
+        self.internalName = .init(from: rawName)
         self.type = type
         self.isTagged = isTagged ?? false
         self.isPinned = isPinned ?? false
@@ -119,7 +119,7 @@ public struct BrewPackage: Identifiable, Equatable, Hashable, Codable, Sendable,
     }
     
     public var id: UUID
-    private let name: BrewPackageName
+    private let internalName: BrewPackageName
 
     public let type: PackageType
     public var isTagged: Bool = false
@@ -224,26 +224,26 @@ public struct BrewPackage: Identifiable, Equatable, Hashable, Codable, Sendable,
     }
     
     /// Get a formatted version of the package's name
-    public func getPackageName(withPrecision precision: NameRetrievalPrecision) -> String
+    public func name(withPrecision precision: NameRetrievalPrecision) -> String
     {
         switch precision
         {
         case .general:
-            return self.name.packageIdentifier
+            return self.internalName.packageIdentifier
         case .precise:
-            guard let boundVersionUnwrapped = name.boundVersion else
+            guard let boundVersionUnwrapped = internalName.boundVersion else
             {
-                return self.name.packageIdentifier
+                return self.internalName.packageIdentifier
             }
             
-            return "\(self.name.packageIdentifier)@\(boundVersionUnwrapped)"
+            return "\(self.internalName.packageIdentifier)@\(boundVersionUnwrapped)"
         }
     }
     
     /// Get the whole package name struct
     public func getCompletePackageName() -> BrewPackageName
     {
-        return self.name
+        return self.internalName
     }
     
     /// The purpose of the tagged status change operation
@@ -267,7 +267,7 @@ public struct BrewPackage: Identifiable, Equatable, Hashable, Codable, Sendable,
     public mutating func changeTaggedStatus(purpose: TaggedStatusChangePurpose)
     {
         
-        let packageName: String = self.getPackageName(withPrecision: .precise)
+        let packageName: String = self.name(withPrecision: .precise)
         
         AppConstants.shared.logger.debug("Will change the tagged status of package \(packageName) for the purpose of \(purpose.rawValue)")
         
@@ -330,7 +330,7 @@ public struct BrewPackage: Identifiable, Equatable, Hashable, Codable, Sendable,
         
         if self.isPinned
         {
-            let pinResult: TerminalOutput = await shell(AppConstants.shared.brewExecutablePath, ["unpin", self.getPackageName(withPrecision: .precise)])
+            let pinResult: TerminalOutput = await shell(AppConstants.shared.brewExecutablePath, ["unpin", self.name(withPrecision: .precise)])
 
             if !pinResult.standardError.isEmpty
             {
@@ -339,7 +339,7 @@ public struct BrewPackage: Identifiable, Equatable, Hashable, Codable, Sendable,
         }
         else
         {
-            let unpinResult: TerminalOutput = await shell(AppConstants.shared.brewExecutablePath, ["pin", self.getPackageName(withPrecision: .precise)])
+            let unpinResult: TerminalOutput = await shell(AppConstants.shared.brewExecutablePath, ["pin", self.name(withPrecision: .precise)])
             if !unpinResult.standardError.isEmpty
             {
                 AppConstants.shared.logger.error("Error unpinning: \(unpinResult.standardError, privacy: .public)")
@@ -374,7 +374,7 @@ public struct BrewPackage: Identifiable, Equatable, Hashable, Codable, Sendable,
     
     public mutating func changeBeingModifiedStatus(to setState: Bool? = nil)
     {
-        let packageName: String = self.getPackageName(withPrecision: .precise)
+        let packageName: String = self.name(withPrecision: .precise)
         
         AppConstants.shared.logger.debug("Will change the \"Being Modified\" status of package \(packageName)")
         
@@ -420,7 +420,7 @@ public struct BrewPackage: Identifiable, Equatable, Hashable, Codable, Sendable,
 
             packageURL = contentsOfParentFolder.filter
             {
-                $0.lastPathComponent.contains(self.getPackageName(withPrecision: .precise))
+                $0.lastPathComponent.contains(self.name(withPrecision: .precise))
             }.first
 
             guard let packageURL
@@ -448,7 +448,7 @@ public extension BrewPackage
         guard let minimalPackage = minimalPackage else { return nil }
 
         self.init(
-            name: minimalPackage.name,
+            rawName: minimalPackage.name,
             type: minimalPackage.type,
             installedOn: minimalPackage.installDate,
             versions: [],

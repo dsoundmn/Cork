@@ -58,13 +58,13 @@ struct PackagesIncludedInTapList: View
                             {
                                 var packageContainedInFormulae: Bool {
                                     return brewPackagesTracker.successfullyLoadedFormulae.contains { installedPackage in
-                                        installedPackage.getPackageName(withPrecision: .precise) == minimalPackage.name
+                                        installedPackage.name(withPrecision: .precise) == minimalPackage.name
                                     }
                                 }
                                 
                                 var packageContainedInCasks: Bool {
                                     return brewPackagesTracker.successfullyLoadedCasks.contains { installedPackage in
-                                        installedPackage.getPackageName(withPrecision: .precise) == minimalPackage.name
+                                        installedPackage.name(withPrecision: .precise) == minimalPackage.name
                                     }
                                 }
                                   

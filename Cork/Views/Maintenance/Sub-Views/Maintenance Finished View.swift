@@ -61,7 +61,7 @@ struct MaintenanceFinishedView: View
             /// **Motivation**: Same as above, but even more performant
             /// Only formulae can hold back cache purging. Therefore, we just filter out the outdated formulae, and those must be holding back the purging
             return outdatedPackagesTracker.allDisplayableOutdatedPackages.filter { $0.package.type == .formula }.map{
-                $0.package.getPackageName(withPrecision: .precise)
+                $0.package.name(withPrecision: .precise)
             }
         }
         else

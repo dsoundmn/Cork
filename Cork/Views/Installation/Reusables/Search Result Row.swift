@@ -114,7 +114,7 @@ struct SearchResultRow: View, Sendable
         {
             if showDescriptionsInSearchResults
             {
-                AppConstants.shared.logger.info("\(searchedForPackage.getPackageName(withPrecision: .precise), privacy: .auto) came into view")
+                AppConstants.shared.logger.info("\(searchedForPackage.name(withPrecision: .precise), privacy: .auto) came into view")
 
                 if description == nil
                 {
@@ -123,11 +123,19 @@ struct SearchResultRow: View, Sendable
                         isLoadingDescription = false
                     }
 
-                    AppConstants.shared.logger.info("\(searchedForPackage.getPackageName(withPrecision: .precise), privacy: .auto) does not have its description loaded")
+                    AppConstants.shared.logger.info("\(searchedForPackage.name(withPrecision: .precise), privacy: .auto) does not have its description loaded")
 
                     do
                     {
-                        let searchedForPackage: BrewPackage = .init(name: searchedForPackage.getPackageName(withPrecision: .precise), type: searchedForPackage.type, installedOn: Date(), versions: [], url: nil, sizeInBytes: nil, downloadCount: nil)
+                        let searchedForPackage: BrewPackage = .init(
+                            rawName: searchedForPackage.name(withPrecision: .precise),
+                            type: searchedForPackage.type,
+                            installedOn: Date(),
+                            versions: [],
+                            url: nil,
+                            sizeInBytes: nil,
+                            downloadCount: nil
+                        )
 
                         do
                         {
@@ -147,7 +155,7 @@ struct SearchResultRow: View, Sendable
                 }
                 else
                 {
-                    AppConstants.shared.logger.info("\(searchedForPackage.getPackageName(withPrecision: .precise), privacy: .auto) already has its description loaded")
+                    AppConstants.shared.logger.info("\(searchedForPackage.name(withPrecision: .precise), privacy: .auto) already has its description loaded")
                 }
             }
         }

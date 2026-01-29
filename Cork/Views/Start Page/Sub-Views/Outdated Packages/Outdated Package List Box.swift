@@ -251,7 +251,7 @@ struct OutdatedPackageListBox: View
                 
                 TableColumn("package-details.dependencies.results.name")
                 { outdatedPackage in
-                    Text(outdatedPackage.package.getPackageName(withPrecision: .precise))
+                    Text(outdatedPackage.package.name(withPrecision: .precise))
                 }
 
                 TableColumn("start-page.updates.installed-version")
@@ -276,7 +276,7 @@ struct OutdatedPackageListBox: View
                         .contextMenu
                         {
                             PreviewPackageButton(packageToPreview: .init(
-                                name: outdatedPackage.package.getPackageName(withPrecision: .precise),
+                                name: outdatedPackage.package.name(withPrecision: .precise),
                                 type: outdatedPackage.package.type,
                                 installedIntentionally: outdatedPackage.package.installedIntentionally)
                             )

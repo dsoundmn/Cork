@@ -88,7 +88,7 @@ struct PackageDetailHeaderComplex: View
                     if dynamicPinnedStatus.isPinned
                     {
                         Image(systemName: "pin.fill")
-                            .help("package-details.pinned.help-\(package.getPackageName(withPrecision: .precise))")
+                            .help("package-details.pinned.help-\(package.name(withPrecision: .precise))")
                     }
                 }
             }

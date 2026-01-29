@@ -55,7 +55,7 @@ struct CasksSection: View
                         switch sortPackagesBy
                         {
                         case .alphabetically:
-                            return firstPackage.getPackageName(withPrecision: .precise) < secondPackage.getPackageName(withPrecision: .precise)
+                            return firstPackage.name(withPrecision: .precise) < secondPackage.name(withPrecision: .precise)
                         case .byInstallDate:
                             return firstPackage.installedOn! < secondPackage.installedOn!
                         case .bySize:
@@ -80,7 +80,7 @@ struct CasksSection: View
         }
         else
         {
-            return brewPackagesTracker.successfullyLoadedCasks.filter { $0.getPackageName(withPrecision: .precise).contains(searchText) }
+            return brewPackagesTracker.successfullyLoadedCasks.filter { $0.name(withPrecision: .precise).contains(searchText) }
         }
     }
 }

@@ -35,7 +35,7 @@ struct OutdatedPackageListBoxRow: View
         .contextMenu
         {
             PreviewPackageButton(packageToPreview: .init(
-                name: outdatedPackage.package.getPackageName(withPrecision: .precise),
+                name: outdatedPackage.package.name(withPrecision: .precise),
                 type: outdatedPackage.package.type,
                 installedIntentionally: outdatedPackage.package.installedIntentionally
             ))
